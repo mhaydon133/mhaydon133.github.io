@@ -26,7 +26,7 @@
 		border-color:white;
 		}
 	a{
-		color:black;
+		color:white;
 		}
 	img{
 		width:100%;
@@ -45,6 +45,7 @@
 			   var expires = "expires=" + d.toGMTString();
 			   document.cookie = cname+"="+cvalue+"; "+expires;
 		   }
+		   
 		   function getCookie(cname) {
 			   var name = cname + "=";
 			   var ca = document.cookie.split(';');
@@ -59,6 +60,14 @@
 			   }
 			   return "";
 		   }
+		   
+		   function changeTheme(){
+			   var e = document.getElementById("themes");
+			   var theme = e.options[e.selectedIndex].value;
+			   console.log(theme);
+			   document.getElementById("shelf").style.backgroundImage = "url("+theme+")";
+		   }  
+		   
 		   function checkCookie() {
 			   var user=getCookie("username");
 			   if (user != "") {
@@ -72,7 +81,14 @@
 		   }
 	   </SCRIPT>
    </HEAD>
-   <BODY onload="checkCookie()">
+   <BODY id="shelf">
+	   <select id="ThemeSelect" onchange="setCookie('theme', this.value, 365);">
+		   <option value="background.jpg">Fantasy</option>
+		   <option value="background1.jpg">Sci-Fi</option>
+		   <option value="Comedy">Comedy</option>
+		   <option value="Horror">Horror</option>
+		   <option value="Romance">Romance</option>
+	   </select>
       <h1>Anime Recomendations</h1>
        <h2>My Main Watch Sites</h2>
        <ol>
