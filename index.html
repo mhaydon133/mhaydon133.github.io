@@ -39,12 +39,22 @@
 <HTML>
    <HEAD>
 	   <TITLE>Anime Recomnedations</TITLE>
+       
 	   <SCRIPT>
+           
 		   function setCookie(cname,cvalue,exdays) {
 			   var d = new Date();
 			   d.setTime(d.getTime() + (exdays*24*60*60*1000));
 			   var expires = "expires=" + d.toGMTString();
 			   document.cookie = cname+"="+cvalue+"; "+expires;
+               alert(expires);
+               var theme_to_background_map = {
+                   'Fantasy': 'background.jpg',
+                   'Horror': 'background2.png',
+                   'Sci-Fi': 'background3.jpg',
+                   'Romance': 'background4.jpg',           }; 
+               var new_background = theme_to_background_map[cvalue];
+               document.body.style.backgroundImage = "url('new_background')";
 		   }
 		   
 		   function getCookie(cname) {
@@ -62,34 +72,22 @@
 			   return "";
 		   }
 		   
-		   function changeTheme(){
-			   var e = document.getElementById("themes");
-			   var theme = e.options[e.selectedIndex].value;
-			   console.log(theme);
-			   document.getElementById("shelf").style.backgroundImage = "url("+theme+")";
-		   }  
-		   
 		   function checkCookie() {
-			   var user=getCookie("username");
-			   if (user != "") {
-				   alert("Welcome again " + user);
+			   var theme=getCookie("background");
+			   if (theme != "") {
+				   alert("You chose " + theme);
 			   } else {
-				   user = prompt("What type of background do you want:","");
+				   theme = prompt("What type of background do you want: Fantasy, Sci-Fi, Horror, or Romance?","Fantasy");
 				   if (user != "" && user != null) {
-					   setCookie("username", user, 30);
+					   setCookie('theme', theme , 30);
 				   }
 			   }
 		   }
-	   </SCRIPT>
+	       
+       </SCRIPT>
    </HEAD>
-   <BODY id="shelf">
-	   <select id="ThemeSelect" onchange="setCookie('theme', this.value, 365);">
-		   <option value="background.jpg">Fantasy</option>
-		   <option value="background1.jpg">Sci-Fi</option>
-		   <option value="Comedy">Comedy</option>
-		   <option value="Horror">Horror</option>
-		   <option value="Romance">Romance</option>
-	   </select>
+    
+   <BODY onload="checkCookie()">
       <h1>Anime Recomendations</h1>
        <h2>My Main Watch Sites</h2>
        <ol>
@@ -120,4 +118,3 @@
     <h2 id="Manga Too!!">Manga Too!!:</h2>
     </BODY>
 </HTML>
-
