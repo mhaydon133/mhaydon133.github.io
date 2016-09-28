@@ -101,7 +101,7 @@
 		   
 		   function checkCookie() {
 			   var theme = readCookie("background");
-			   if (theme != "" || theme != null) {
+			   if (theme != "" && theme != null) {
 				   alert("You chose " + theme);
 			   } else {
 				   theme = prompt("What type of background do you want: Fantasy, Sci-Fi, Horror, or Romance?","Fantasy");
