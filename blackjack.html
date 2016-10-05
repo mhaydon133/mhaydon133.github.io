@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "Haydon">
+<html>
+<body>
+
+<p>Random Card Test</p>
+
+<p id="demo"></p>
+
+<script>
+var start = prompt("Press Enter to play.", "Deal");
+if (start !== "Deal"){
+var start = prompt("Press Enter to play.", "Deal");
+}
+else {
+getcards();
+}
+function getcards() {
+var cards = [2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9,10,10,10,10,"Jack","Jack","Jack","Jack","Queen","Queen","Queen","Queen","King","King","King","King","Ace","Ace","Ace","Ace"];
+var count = 0;
+var player = [];
+var dealer = [];
+while (count < 2){
+var x = Math.floor((Math.random() * cards.length));
+player.push(cards[x]);
+cards.splice(x,1);
+var y = Math.floor((Math.random() * cards.length));
+dealer.push(cards[y]);
+cards.splice(y,1);
+count++;
+}
+var pcards = player;
+player = toNum(player);
+document.getElementById("demo").innerHTML = ("Your current hand is: " + pcards);
+var dcards = dealer;
+dealer = toNum(dealer);
+//document.write("Dealers hand is: Hidden, ");
+//document.write(dcards[1]);
+if (player == 21){
+end(pcards,dcards,player,dealer);
+}
+    document.getElementById("demo").innerHTML = ("Your current hand is: " + pcards);
+hitorstand(pcards,dcards,player,dealer);
+function hitorstand(pcards,dcards,player,dealer){
+var choice = prompt("Do you want to Hit or Stand?", "Stand");
+if (choice === "Hit"){
+pcards = hit(pcards);
+player = toNum(pcards)
+document.getElementById("demo").innerHTML = ("Your current hand is: " + pcards);
+hitorstand(pcards,dcards,player,dealer);
+}
+else if (choice === "Stand"){ 
+stand(pcards,dcards,player,dealer)
+}
+}
+function hit(xcards){
+var z = Math.floor((Math.random() * cards.length));
+xcards.push(cards[z]);
+return(xcards);
+}
+function stand(pcards,dcards,player,dealer){
+document.getElementById("demo").innerHTML = ("Your current hand is: " + pcards);
+//document.write(dealer, player, dcards, pcards);
+player = toNum(pcards);
+if (player > 21){
+end(pcards,dcards,player,dealer);
+}
+else if (dealer > player){
+end(pcards,dcards,player,dealer);
+}
+else if (dealer <= 16 ){
+dcards = hit(dcards);
+dealer = toNum(dcards);
+//document.write(" ",dcards,"    ", dealer);
+stand(pcards,dcards,player,dealer);
+}
+else if (dealer >= 17 || dealer > player){
+end(pcards,dcards,player,dealer);
+}
+}
+function end(pcards,dcards,player,dealer){
+player = toNum(pcards);
+dealer = toNum(dcards);
+if (player > 21){
+var result = "bust";
+}
+else if (dealer > 21){
+var result = "win";
+}
+else if (player >= dealer){
+var result = "win";
+}
+else if (player < dealer){
+var result = "lose";
+}
+document.getElementById("demo").innerHTML = ("Your current hand is: " + pcards + " You " + result + " with a score of: " + player+ " The Dealers hand is: " + dcards + " With a score of: " + dealer);
+
+}
+function toNum(a){
+var i = 0;
+var b = [];
+//document.write(a);
+while (i < a.length){
+if (a[i] === 2) b.push(2);
+else if (a[i] === 3) b.push(3);
+else if (a[i] === 4) b.push(4);
+else if (a[i] === 5) b.push(5);
+else if (a[i] === 6) b.push(6);
+else if (a[i] === 7) b.push(7);
+else if (a[i] === 8) b.push(8);
+else if (a[i] === 9) b.push(9);
+else if (a[i] === 10) b.push(10);
+else if (a[i] === "Jack") b.push(10);
+else if (a[i] === "Queen") b.push(10);
+else if (a[i] === "King") b.push(10);
+else if (a[i] === "Ace") b.push("Ace");
+i++;
+}
+var b = moveAce(b);
+var b = isblack(b);
+function moveAce(b){
+var j = 0;
+while (j < b.length){
+if (b[j] === "Ace"){
+b.splice(j,1);
+b.push("Ace");
+}
+j++
+}
+return b;
+}
+function isblack(b){
+var k = 0;
+var x = 0;
+while (k < b.length){
+if (b[k] === "Ace"){
+if (x <= 10){
+b.splice(k,1);
+b.push(11);
+}
+else if (x > 10){ 
+b.splice(k,1);
+b.push(1);
+}
+}
+x = x + b[k];
+k++;
+}
+return x;
+}
+return b;
+}
+}
+</script>
+
+</body>
+</html>
